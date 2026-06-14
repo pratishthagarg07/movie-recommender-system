@@ -1,126 +1,63 @@
-# Movie Recommender System
+# 🎬 Movie Recommender System
 
-A content-based movie recommendation system built using Python, Pandas, and Scikit-Learn.
-
-## Project Status
-
-✅ Data Collection  
-✅ Data Cleaning  
-✅ Feature Engineering  
-⬜ Text Vectorization  
-⬜ Cosine Similarity  
-⬜ Recommendation Function  
-⬜ Web App Deployment
+A Content-Based Movie Recommendation System built using NLP techniques and Machine Learning. The system recommends movies similar to a selected movie by analyzing genres, cast, crew, keywords, and movie overviews.
 
 ---
 
-## Dataset
+## 🚀 Features
 
-Dataset used: TMDB 5000 Movie Dataset
+- Content-Based Filtering
+- Natural Language Processing (NLP)
+- Text Preprocessing and Stemming
+- Bag of Words Vectorization
+- Cosine Similarity-Based Recommendations
+- Interactive Streamlit Web Application
+
+---
+
+## 📊 Dataset
+
+TMDB 5000 Movie Dataset
 
 Source:
 https://www.kaggle.com/datasets/tmdb/tmdb-movie-metadata
 
 Files used:
+
 - tmdb_5000_movies.csv
 - tmdb_5000_credits.csv
 
 ---
 
-## Objective
-
-The goal of this project is to recommend movies similar to a movie selected by the user using content-based filtering techniques.
-
----
-
-## Technologies Used
+## 🛠️ Tech Stack
 
 - Python
 - Pandas
 - NumPy
-- AST
-- Jupyter Notebook
+- Scikit-Learn
+- NLTK
+- Streamlit
 
 ---
 
-## Data Cleaning Steps Completed
+## 📌 Project Workflow
 
-### 1. Imported Datasets
+### 1. Data Collection
 
-Loaded:
-- Movies dataset
-- Credits dataset
+Loaded movie metadata and credits datasets from TMDB.
 
-### 2. Merged Datasets
+### 2. Data Preprocessing
 
-Merged datasets using the movie title column.
+- Removed missing values
+- Merged datasets
+- Selected relevant features
+- Extracted director information
+- Extracted top cast members
+- Processed genres and keywords
 
-### 3. Selected Relevant Features
+### 3. Feature Engineering
 
-Used the following columns:
-
-- movie_id
-- title
-- overview
-- genres
-- keywords
-- cast
-- crew
-
-### 4. Removed Missing Values
-
-Removed rows containing null values using:
-
-```python
-movies.dropna(inplace=True)
-```
-
-### 5. Converted JSON-like Strings
-
-Used `ast.literal_eval()` to convert string representations of lists into Python objects.
-
-Example:
-
-Before:
-
-```text
-'[{"id":28,"name":"Action"}]'
-```
-
-After:
-
-```python
-['Action']
-```
-
-### 6. Extracted Important Information
-
-Extracted:
-
-- Genre names
-- Keyword names
-- Top 3 cast members
-- Director name from crew data
-
-### 7. Removed Spaces
-
-Converted names such as:
-
-```text
-Sam Worthington
-```
-
-to
-
-```text
-SamWorthington
-```
-
-to ensure they are treated as a single token.
-
-### 8. Created Tags Column
-
-Combined:
+Created a combined `tags` feature using:
 
 - Overview
 - Genres
@@ -128,58 +65,94 @@ Combined:
 - Cast
 - Crew
 
-into a single feature column called `tags`.
+### 4. Text Processing
 
-### 9. Converted Tags into Text
+Applied:
 
-Converted lists into a single text string using:
+- Lowercasing
+- Tokenization
+- Stemming using Porter Stemmer
 
-```python
-" ".join(x)
-```
+### 5. Vectorization
 
-Example:
-
-Before:
+Converted movie tags into numerical vectors using:
 
 ```python
-['Action', 'Adventure', 'Fantasy']
+CountVectorizer(max_features=5000, stop_words='english')
 ```
 
-After:
+### 6. Similarity Calculation
+
+Calculated movie similarity using:
+
+```python
+cosine_similarity()
+```
+
+### 7. Recommendation Generation
+
+Generated Top-5 movie recommendations based on cosine similarity scores.
+
+---
+
+## 📈 Results
+
+- Processed 4,800+ movies
+- Generated 5,000-dimensional feature vectors
+- Built a similarity matrix for movie recommendations
+- Successfully deployed recommendation logic through a Streamlit interface
+
+---
+
+## 📂 Project Structure
 
 ```text
-Action Adventure Fantasy
+movie-recommender-system/
+│
+├── app.py
+├── create_model.py
+├── movie_dict.pkl
+├── similarity.pkl
+├── README.md
 ```
 
 ---
 
-## Current Output
+## ▶️ Running the Project
 
-The dataset now contains:
+Install dependencies:
 
-| movie_id | title | tags |
-|-----------|---------|---------|
-| 19995 | Avatar | Action Adventure Fantasy ... |
+```bash
+pip install pandas numpy scikit-learn nltk streamlit
+```
 
-This processed dataset will be used for:
+Run the application:
 
-- Text Vectorization
-- Similarity Calculation
-- Movie Recommendation Generation
-
----
-
-## Next Steps
-
-- Apply Stemming
-- Convert Text into Vectors using CountVectorizer
-- Calculate Cosine Similarity
-- Build Recommendation Function
-- Deploy Application
+```bash
+streamlit run app.py
+```
 
 ---
 
-## Author
+## 🎯 Sample Recommendation
 
-Nikki
+Input:
+
+```text
+Batman Begins
+```
+
+Output:
+
+```text
+The Dark Knight
+Batman
+The Dark Knight Rises
+10th & Wolf
+```
+
+---
+
+## 👩‍💻 Author
+
+Pratishtha Garg
